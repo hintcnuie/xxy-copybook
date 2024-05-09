@@ -17,14 +17,14 @@ public class CopybookData {
      * 标题
      */
     @Builder.Default
-    String title = "X字帖自动生成";
+    String title = "";
     @Builder.Default
-    String subtitle = "姓名：       日期：      ";
+    String subtitle = "姓名：        ";
     /**
      * 作者
      */
     @Builder.Default
-    String author = "Radium";
+    String author = "";
     /**
      * 二维码图片的地址
      */

@@ -3,6 +3,8 @@ package io.github.radium0028.xxycopybook;
 import io.github.radium0028.xxycopybook.cell.AbstractCell;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -12,6 +14,8 @@ import java.util.List;
  */
 @AllArgsConstructor
 public class CopybookDirector {
+    private static final Logger logger = LoggerFactory.getLogger(CopybookDirector.class);
+
     @Setter
     AbstractCopybookBuilder abstractCopybookBuilder;
 

@@ -13,6 +13,8 @@ import io.github.radium0028.xxycopybook.text.CellPinyinCopy;
 import io.github.radium0028.xxycopybook.text.CellText;
 import io.github.radium0028.xxycopybook.text.CellTextCopy;
 import io.github.radium0028.xxycopybook.utils.ImageUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -29,6 +31,8 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author radium
  */
 public class BaseCopybook extends AbstractCopybookBuilder {
+    private static final Logger logger = LoggerFactory.getLogger(BaseCopybook.class);
+
     int textCellWidth = this.templateBean.getTextCellWidth();
     int textCellHeight = this.templateBean.getTextCellHeight();
     int pinyinCellWidth = this.templateBean.getPinyinCellWidth();
@@ -44,6 +48,7 @@ public class BaseCopybook extends AbstractCopybookBuilder {
     @Override
     public BufferedImage createBasic() {
         //一个白色的底图
+        logger.debug("default background image:一个白色的底图");
         return ImageUtil.createImage(this.templateBean.getWidth(), this.templateBean.getHeight(), Color.WHITE);
     }
 

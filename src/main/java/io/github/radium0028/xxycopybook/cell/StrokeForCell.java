@@ -24,7 +24,7 @@ public class StrokeForCell {
     );
 
     /**
-     * 实线
+     * 加粗实线
      */
     public final static BasicStroke LINE_BOLD = new BasicStroke(2,
             BasicStroke.CAP_BUTT,
