@@ -306,7 +306,7 @@ public class CopybookTemplate {
                 ", copyWordNum=" + copyWordNum +
                 ", emptyCellNum=" + emptyCellNum +
                 ", showPinyin=" + showPinyin +
-                ", font=" + font +
+                ", ====================================font=" + font +
                 ", pinyinFont=" + pinyinFont +
                 ", textColor=" + textColor +
                 ", copyTextColor=" + copyTextColor +

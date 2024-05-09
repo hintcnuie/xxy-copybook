@@ -37,4 +37,17 @@ public class CopybookData {
     List<String> wordList;
 
     List<String> pinyinList;
+
+    @Override
+    public String toString() {
+        return "CopybookData{" +
+                "title='" + title + '\'' +
+                ", subtitle='" + subtitle + '\'' +
+                ", author='" + author + '\'' +
+                ", qrcode='" + qrcode + '\'' +
+                ", copyright='" + copyright + '\'' +
+                ", wordList=" + wordList +
+                ", pinyinList=" + pinyinList +
+                '}';
+    }
 }

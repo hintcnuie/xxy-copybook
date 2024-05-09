@@ -191,7 +191,7 @@ public class AppTest
         //需要些的字
         String text = "锄禾日当午汗滴禾下土谁知盘中餐粒粒皆辛苦李白";
         //字体名字
-        String fontName = "瑞美加张清平硬笔行书";
+        String fontName = "KaiTi";
 
         CopybookTemplate.CopybookTemplateBuilder copybookTemplateBuilder = CopybookTemplate.builder()
                 .emptyCellNum(2)

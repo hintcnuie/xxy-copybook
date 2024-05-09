@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Unit test for simple App.
+ * 语文课本，人教版一年级下，2024年1月第8次印刷
  */
 public class YiNianJiXia
 {
@@ -55,6 +55,7 @@ public class YiNianJiXia
             Arrays.stream(fp.listFiles()).forEach(fontFile -> {
                 try {
                     Font font = Font.createFont(Font.PLAIN, fontFile);
+                    logger.debug("registering font {}", font);
                     ge.registerFont(font);
                 } catch (FontFormatException e) {
                     e.printStackTrace();
@@ -77,15 +78,44 @@ public class YiNianJiXia
     }
 
     /**
-     * 测试画页头和页尾
+     * 第11课
      */
     @Test
-    void constructHF_14() {
+    void constructHF_11() {
         //需要些的字
-        String text = "直,呀,边,呢,吗,吧,加";
-        String pinyin = "zhí,yā,biān,ne,má,bā,jiā";
+        String text = "首,采,无,树,爱,尖,角";
+        String pinyin = "shǒu,cǎi,wú,shù,ài,jiān,jiǎo";
+
+        construct(text, pinyin,"11");
+    }
+    /**
+     * 第12课
+     */
+    @Test
+    void constructHF_12() {
+        //需要些的字
+        String text = "亮,机,台,放,鱼,朵,美";
+        String pinyin = "liàng,jī,tái,fàng,yú,duǒ,měi";
+
+        construct(text, pinyin,"12");
+    }
+    /**
+     * 第13课
+     */
+    @Test
+    void constructHF_13() {
+        //需要些的字
+        String text = "过,这,呀,边,吗,吧,加";
+        String pinyin = "guò,zhè,yā,biān,má,bā,jiā";
+
+        construct(text, pinyin,"13");
+    }
+
+
+    private  void construct( String text, String pinyin,String title) {
         //字体名字
-        String fontName = "方正仿宋-简体";
+//        String fontName = "KaiTi";
+        String fontName = "FZFangSong-ZS";
         CopybookTemplate.CopybookTemplateBuilder copybookTemplateBuilder = CopybookTemplate.builder()
                 .textLineStroke(StrokeForCell.DOTTED_LINE)
                 .cellMargin(new Integer[]{10, 0, 0, 0})
@@ -113,13 +143,21 @@ public class YiNianJiXia
                 .build());
         //设置字体
         copybookTemplateBuilder.font(new Font(fontName, Font.PLAIN, 140));
-        //设置模板数据
-        CopybookTemplate copybookTemplate = copybookTemplateBuilder.pagePadding(new Integer[]{10,10,10,200}).build();
+
+        //设置页边距
+        copybookTemplateBuilder.pagePadding(new Integer[]{10,10,10,200});
+
+        //生成模板的样式数据
+        CopybookTemplate copybookTemplate = copybookTemplateBuilder.build();
+        logger.info("样式数据："+String.valueOf(copybookTemplate));
+
+        //设置标题、汉字信息
         CopybookData copybookData = CopybookData.builder()
-                .title("一年级下-14")
+                .title("一年级下-" + title)
                 .wordList(CollUtil.toList(text.split(",")))
                 .pinyinList(CollUtil.toList(pinyin.split(",")))
                 .build();
+        logger.info("字帖数据："+String.valueOf(copybookData));
 
         BaseCopybook baseCopybook = new BaseCopybook(copybookTemplate, copybookData);
         CopybookDirector director = new CopybookDirector(baseCopybook);
@@ -132,10 +170,13 @@ public class YiNianJiXia
                 try {
                     ImageIO.write(v, "png", output);
 
-                    File constructFile = new File(outputPath +
-                            StrUtil.format("constructHeaderAndFooter{}.png", i));
+                    //图像写到硬盘
+                    String imgName =  StrUtil.format("constructHF_"+ title+"_{}.png", i);
+                    File constructFile = new File(outputPath + imgName);
+                    //write
                     FileUtil.writeBytes(output.toByteArray(), constructFile);
                     logger.debug("Write file to " + constructFile.getAbsolutePath());
+                    //open for user view
                     Desktop.getDesktop().open(constructFile);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -148,51 +189,5 @@ public class YiNianJiXia
 
         }
     }
-    /**
-     * 一年级下语文-14课
-     */
-    @Test
-    void construct_14() {
-        //需要些的字
-        String text = "直呀边呢吗吧加";
-        //字体名字
-        String fontName = "方正仿宋-简体";
 
-        CopybookTemplate.CopybookTemplateBuilder copybookTemplateBuilder = CopybookTemplate.builder()
-                .emptyCellNum(2)
-                .textLineStroke(StrokeForCell.LINE)
-                //单元格使用一个边框+田字格样式。
-                .textCellLineStyle(CollUtil.toList(LineStyle.BORDER, LineStyle.TIAN))
-                //.textCellLineStyle(CollUtil.toList(LineStyle.BORDER, LineStyle.PINYIN3CELL))
-                ;
-        //给边框格一个加粗的边线
-        copybookTemplateBuilder.textLineStrokeMap(MapUtil
-                .builder(LineStyle.BORDER.getValue(), StrokeForCell.LINE_BOLD)
-
-                .build());
-        Font font = new Font(fontName, Font.PLAIN, 140);
-        copybookTemplateBuilder.font(font);
-        //设置模板数据
-        CopybookTemplate copybookTemplate = copybookTemplateBuilder.pagePadding(new Integer[]{10,10,10,200}).build();
-        CopybookData copybookData = CopybookData.builder()
-                .author("Radium")
-                .wordList(CollUtil.toList(text.split("")))
-                .build();
-
-        BaseCopybook baseCopybook = new BaseCopybook(copybookTemplate, copybookData);
-        CopybookDirector director = new CopybookDirector(baseCopybook);
-        try {
-            Copybook construct = director.buildCopybook();
-            BufferedImage bufferedImage = construct.exportFirstImage();
-            //输出图像
-            ByteArrayOutputStream output = new ByteArrayOutputStream();
-            ImageIO.write(bufferedImage, "png", output);
-            File constructFile = new File(outputPath+"construct.png");
-            FileUtil.writeBytes(output.toByteArray(), constructFile);
-            logger.debug("Write file to " + constructFile.getAbsolutePath());
-            Desktop.getDesktop().open(constructFile);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

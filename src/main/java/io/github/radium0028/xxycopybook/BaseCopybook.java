@@ -54,8 +54,11 @@ public class BaseCopybook extends AbstractCopybookBuilder {
 
     @Override
     public AbstractCell createTextCell() {
+
+        logger.info("Creating text cell with decorate styles");
         AbstractCell abstractCell = new ConretetCell(this.templateBean.getTextCellWidth(),
                 templateBean.getTextCellHeight());
+        logger.debug("AbstractCell:{}", abstractCell);
 
         AtomicReference<AbstractCell> atomCell = new AtomicReference<>(abstractCell);
         this.templateBean.getTextCellLineStyle().forEach(lineStyle -> {
@@ -67,13 +70,20 @@ public class BaseCopybook extends AbstractCopybookBuilder {
                         Optional.ofNullable(this.templateBean.getTextLineColorMap()).orElse(new HashMap<>());
                 Color color = stringColorMap.get(lineStyle.getValue());
                 color = Optional.ofNullable(color).orElse(this.templateBean.getTextLineColor());
+                logger.debug("线条颜色:{}", color);
+
                 //线条样式
                 Map<String, BasicStroke> lineStrokeMap =
                         Optional.ofNullable(this.templateBean.getTextLineStrokeMap()).orElse(new HashMap<>());
                 BasicStroke stroke = lineStrokeMap.get(lineStyle.getValue());
                 stroke = Optional.ofNullable(stroke).orElse(this.templateBean.getTextLineStroke());
+                logger.debug("线条样式:{}", stroke);
+
                 //创建装饰器
-                atomCell.set((AbstractCell) ReflectUtil.newInstance(clz, atomCell.get(), color, stroke));
+
+                AbstractCell abstractCell2 = (AbstractCell) ReflectUtil.newInstance(clz, atomCell.get(), color, stroke);
+                logger.debug("AbstractCell2:{}", abstractCell2);
+                atomCell.set(abstractCell2);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -144,10 +154,10 @@ public class BaseCopybook extends AbstractCopybookBuilder {
                     break;
                 }
                 String word = this.copybookData.getWordList().get(wordIndex);
-//                log.debug("准备画文字：{}", word);
+                logger.debug("准备画文字：{}", word);
                 //开始画一行的文字
                 for (int j = 0; j < fullWordNum; j++) {
-//                    log.debug("画'{}'的完整文字：", word);
+                    logger.debug("画'{}'的完整文字：", word);
                     //完整文字
                     CellText cellText = new CellText(textAbstractCell, this.templateBean.getFont(),
                             this.templateBean.getTextColor());
@@ -163,7 +173,10 @@ public class BaseCopybook extends AbstractCopybookBuilder {
                 }
 
                 for (int x = 0; x < copyWordNum; x++) {
-//                    log.debug("画'{}'的描红文字：", word);
+                    if(x==0){
+                        logger.debug("画'{}'的描红文字：", word);
+                    }
+
                     //描红文字
                     CellTextCopy textCell1 = new CellTextCopy(textAbstractCell, this.templateBean.getFont(),
                             this.templateBean.getTextColor());
