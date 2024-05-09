@@ -114,8 +114,8 @@ public class YiNianJiXia
 
     private  void construct( String text, String pinyin,String title) {
         //字体名字
-//        String fontName = "KaiTi";
-        String fontName = "FZFangSong-ZS";
+        String fontName = "KaiTi";
+
         CopybookTemplate.CopybookTemplateBuilder copybookTemplateBuilder = CopybookTemplate.builder()
                 .textLineStroke(StrokeForCell.DOTTED_LINE)
                 .cellMargin(new Integer[]{10, 0, 0, 0})
