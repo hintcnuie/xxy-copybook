@@ -38,7 +38,7 @@ public class StrokeForCell {
             BasicStroke.CAP_BUTT,
             BasicStroke.JOIN_MITER,
             10f,
-            new float[]{10, 3},
+            new float[]{12, 4},
             0);
 
 }
