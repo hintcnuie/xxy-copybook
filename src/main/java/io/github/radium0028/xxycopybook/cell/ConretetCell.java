@@ -41,7 +41,7 @@ public class ConretetCell extends AbstractCell {
     public BufferedImage draw() {
         Integer width = Optional.ofNullable(this.width).orElse(TemplateSize.CELL_WIDTH.getValue());
         Integer height = Optional.ofNullable(this.height).orElse(TemplateSize.CELL_HEIGHT.getValue());
-        logger.debug("绘制田字格（ConreteCell），width:{},height:{}",width,height);
+       // logger.debug("绘制田字格（ConreteCell），width:{},height:{}",width,height);
 
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_BGR);
         Graphics2D g = image.createGraphics();

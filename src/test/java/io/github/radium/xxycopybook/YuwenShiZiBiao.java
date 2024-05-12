@@ -33,10 +33,10 @@ import java.util.Optional;
 /**
  * 语文课本写字表，人教版一年级下，2024年1月第8次印刷
  */
-public class YiNianJiXia
+public class YuwenShiZiBiao
 {
     private static final String outputPath = AbstractCellDecorator.class.getClassLoader().getResource("fonts").getFile() +"/../../output/";
-    private static final Logger logger = LoggerFactory.getLogger(YiNianJiXia.class);
+    private static final Logger logger = LoggerFactory.getLogger(YuwenShiZiBiao.class);
     @BeforeAll
     static void before() {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -88,89 +88,7 @@ public class YiNianJiXia
 
         construct(text, pinyin,"1");
     }
-    /**
-     * 第2课
-     */
-    @Test
-    void constructHF_2() {
-        //需要些的字
-        String text = "姓,什,么,双,国,王,方";
-        String pinyin = "xìng,shén,me,shuāng,guó,wáng,fāng";
 
-        construct(text, pinyin,"2");
-    }
-
-
-    /**
-     * 第3课
-     */
-    @Test
-    void constructHF_3() {
-        //需要些的字
-        String text = "青,清,气,晴,情,请,生";
-        String pinyin = "xìng,shén,me,shuāng,guó,wáng,fāng";
-
-        construct(text, pinyin,"3");
-    }
-
-    /**
-     * 第4课
-     */
-    @Test
-    void constructHF_4() {
-        //需要些的字
-        String text = "字,左,右,红,时,动,万";
-        String pinyin = "zì,zuǒ,yòu,hóng,shí,dòng,wàn";
-
-        construct(text, pinyin,"4");
-    }
-
-
-    /**
-     * 第5课
-     */
-    @Test
-    void constructHF_5() {
-        //需要些的字
-        String text = "字,左,右,红,时,动,万";
-        String pinyin = "zì,zuǒ,yòu,hóng,shí,dòng,wàn";
-
-        construct(text, pinyin,"5");
-    }
-
-    /**
-     * 第11课
-     */
-    @Test
-    void constructHF_11() {
-        //需要些的字
-        String text = "首,采,无,树,爱,尖,角";
-        String pinyin = "shǒu,cǎi,wú,shù,ài,jiān,jiǎo";
-
-        construct(text, pinyin,"11");
-    }
-    /**
-     * 第12课
-     */
-    @Test
-    void constructHF_12() {
-        //需要些的字
-        String text = "亮,机,台,放,鱼,朵,美";
-        String pinyin = "liàng,jī,tái,fàng,yú,duǒ,měi";
-
-        construct(text, pinyin,"12");
-    }
-    /**
-     * 第13课
-     */
-    @Test
-    void constructHF_13() {
-        //需要些的字
-        String text = "过,这,呀,边,吗,吧,加";
-        String pinyin = "guò,zhè,yā,biān,má,bā,jiā";
-
-        construct(text, pinyin,"13");
-    }
 
 
     private  void construct( String text, String pinyin,String title) {
@@ -178,39 +96,47 @@ public class YiNianJiXia
         String fontName = "KaiTi";
 //        String fontName = "Ramega ZhangQingpingYingbiXingshu";
 
-        CopybookStyle.CopybookStyleBuilder copybookTemplateBuilder = CopybookStyle.builder()
+        CopybookStyle.CopybookStyleBuilder copybookStyleBuilder = CopybookStyle.builder()
                 .textLineStroke(StrokeForCell.LONG_DOTTED_LINE)
                 .cellMargin(new Integer[]{10, 0, 0, 0})
                 //单元格使用一个边框+田字格样式。
                 .textCellLineStyle(CollUtil.toList(LineStyle.BORDER, LineStyle.TIAN,LineStyle.XCELL));
 
         //设置页头高度为80
-        copybookTemplateBuilder.headerHeight(200);
+        copybookStyleBuilder.headerHeight(200);
         //设置页尾高度为50
-        copybookTemplateBuilder.footerHeight(200);
+        copybookStyleBuilder.footerHeight(200);
 
         //拼音设置
-        copybookTemplateBuilder.showPinyin(true)
+        copybookStyleBuilder.showPinyin(true)
                 .pinyinFont(new Font("Mengshen-Handwritten",Font.PLAIN,50))
                 .pinyinCellLineStyle(CollUtil.toList(LineStyle.BORDER, LineStyle.PINYINCELL));
-        copybookTemplateBuilder.pinyinLineStrokeMap(MapUtil
+        copybookStyleBuilder.pinyinLineStrokeMap(MapUtil
                 .builder(LineStyle.BORDER.getValue(), StrokeForCell.LINE_BOLD)
                 .put(LineStyle.PINYINCELL.getValue(), StrokeForCell.DOTTED_LINE)
                 .put(LineStyle.XCELL.getValue(), StrokeForCell.DOTTED_LINE)
                 .build()
         );
         //给边框格一个加粗的边线
-        copybookTemplateBuilder.textLineStrokeMap(MapUtil
+        copybookStyleBuilder.textLineStrokeMap(MapUtil
                 .builder(LineStyle.BORDER.getValue(), StrokeForCell.LINE_BOLD)
                 .build());
         //设置字体
-        copybookTemplateBuilder.font(new Font(fontName, Font.PLAIN, 140));
+        copybookStyleBuilder.font(new Font(fontName, Font.PLAIN, 140));
 
         //设置页边距
-        copybookTemplateBuilder.pagePadding(new Integer[]{10,10,10,200});
+        copybookStyleBuilder.pagePadding(new Integer[]{10,10,10,200});
 
+        //完整的文字显示
+        int wordCount = text.length();
+        logger.info("完整的文字显示 wordCount: {}", wordCount);
+        copybookStyleBuilder.fullWordNum(Integer.valueOf(wordCount));
+
+        //临摹的文字显示几个
+        copybookStyleBuilder.copyWordNum(0);
+        copybookStyleBuilder.emptyCellNum(0).rowCellNum(wordCount).rowNum(wordCount).rowCellNum(wordCount);
         //生成模板的样式数据
-        CopybookStyle copybookStyle = copybookTemplateBuilder.build();
+        CopybookStyle copybookStyle = copybookStyleBuilder.build();
         logger.info("字帖样式数据（CopybookTemplate）："+String.valueOf(copybookStyle));
 
         //设置标题、汉字信息
@@ -233,7 +159,7 @@ public class YiNianJiXia
                     ImageIO.write(v, "png", output);
 
                     //图像写到硬盘
-                    String imgName =  StrUtil.format("YiNianJiXia_HF_"+ title+"_{}.png", i);
+                    String imgName =  StrUtil.format("constructHF_"+ title+"_{}.png", i);
                     File constructFile = new File(outputPath + imgName);
                     //write
                     FileUtil.writeBytes(output.toByteArray(), constructFile);

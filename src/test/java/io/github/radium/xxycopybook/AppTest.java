@@ -12,7 +12,7 @@ import io.github.radium0028.xxycopybook.cell.AbstractCellDecorator;
 import io.github.radium0028.xxycopybook.cell.StrokeForCell;
 import io.github.radium0028.xxycopybook.dict.LineStyle;
 import io.github.radium0028.xxycopybook.material.CopybookData;
-import io.github.radium0028.xxycopybook.material.CopybookTemplate;
+import io.github.radium0028.xxycopybook.material.CopybookStyle;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -29,8 +29,6 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-
-import static java.awt.Color.RED;
 
 /**
  * Unit test for simple App.
@@ -87,9 +85,9 @@ public class AppTest
         //需要些的字
         String text = "绿遍山原白满川子规声里雨如烟";
         //字体名字
-        String fontName = "方正仿宋-简体";
+        String fontName = "KaiTi";
 
-        CopybookTemplate.CopybookTemplateBuilder copybookTemplateBuilder = CopybookTemplate.builder()
+        CopybookStyle.CopybookStyleBuilder copybookTemplateBuilder = CopybookStyle.builder()
                 .emptyCellNum(2)
                 .textLineStroke(StrokeForCell.LINE)
                 //单元格使用一个边框+田字格样式。
@@ -104,13 +102,13 @@ public class AppTest
         Font font = new Font(fontName, Font.PLAIN, 140);
         copybookTemplateBuilder.font(font);
         //设置模板数据
-        CopybookTemplate copybookTemplate = copybookTemplateBuilder.pagePadding(new Integer[]{10,10,10,200}).build();
+        CopybookStyle copybookStyle = copybookTemplateBuilder.pagePadding(new Integer[]{10,10,10,200}).build();
         CopybookData copybookData = CopybookData.builder()
                 .author("Radium")
                 .wordList(CollUtil.toList(text.split("")))
                 .build();
 
-        BaseCopybook baseCopybook = new BaseCopybook(copybookTemplate, copybookData);
+        BaseCopybook baseCopybook = new BaseCopybook(copybookStyle, copybookData);
         CopybookDirector director = new CopybookDirector(baseCopybook);
         try {
             Copybook construct = director.buildCopybook();
@@ -135,7 +133,7 @@ public class AppTest
         String pinyin = "cháo,chēng,yán,lóng,zhào,méng,báo,wù,áng,fèi,guàn,jiù,huī,cháo,chēng,yán,lóng,zhào,méng,báo,wù,áng,fèi,guàn,jiù,huī";
         //字体名字
         String fontName = "瑞美加张清平硬笔行书";
-        CopybookTemplate.CopybookTemplateBuilder copybookTemplateBuilder = CopybookTemplate.builder()
+        CopybookStyle.CopybookStyleBuilder copybookTemplateBuilder = CopybookStyle.builder()
                 .textLineStroke(StrokeForCell.DOTTED_LINE)
                 .cellMargin(new Integer[]{10, 0, 0, 0})
                 //单元格使用一个边框+田字格样式。
@@ -155,14 +153,14 @@ public class AppTest
         //设置字体
         copybookTemplateBuilder.font(new Font(fontName, Font.PLAIN, 140));
         //设置模板数据
-        CopybookTemplate copybookTemplate = copybookTemplateBuilder.pagePadding(new Integer[]{10,10,10,200}).build();
+        CopybookStyle copybookStyle = copybookTemplateBuilder.pagePadding(new Integer[]{10,10,10,200}).build();
         CopybookData copybookData = CopybookData.builder()
                 .author("Radium")
                 .wordList(CollUtil.toList(text.split(",")))
                 .pinyinList(CollUtil.toList(pinyin.split(",")))
                 .build();
 
-        BaseCopybook baseCopybook = new BaseCopybook(copybookTemplate, copybookData);
+        BaseCopybook baseCopybook = new BaseCopybook(copybookStyle, copybookData);
         CopybookDirector director = new CopybookDirector(baseCopybook);
         try {
             Copybook construct = director.buildCopybook();
@@ -193,7 +191,7 @@ public class AppTest
         //字体名字
         String fontName = "KaiTi";
 
-        CopybookTemplate.CopybookTemplateBuilder copybookTemplateBuilder = CopybookTemplate.builder()
+        CopybookStyle.CopybookStyleBuilder copybookTemplateBuilder = CopybookStyle.builder()
                 .emptyCellNum(2)
                 .textLineStroke(StrokeForCell.LINE)
                 //单元格使用一个边框+田字格样式+对角线。
@@ -210,13 +208,13 @@ public class AppTest
         Font font = new Font(fontName, Font.PLAIN, 140);
         copybookTemplateBuilder.font(font);
         //设置模板数据
-        CopybookTemplate copybookTemplate = copybookTemplateBuilder.pagePadding(new Integer[]{10,10,10,200}).build();
+        CopybookStyle copybookStyle = copybookTemplateBuilder.pagePadding(new Integer[]{10,10,10,200}).build();
         CopybookData copybookData = CopybookData.builder()
                 .author("Radium")
                 .wordList(CollUtil.toList(text.split("")))
                 .build();
 
-        BaseCopybook baseCopybook = new BaseCopybook(copybookTemplate, copybookData);
+        BaseCopybook baseCopybook = new BaseCopybook(copybookStyle, copybookData);
         CopybookDirector director = new CopybookDirector(baseCopybook);
         try {
             Copybook construct = director.buildCopybook();
@@ -248,7 +246,7 @@ public class AppTest
         String pinyin = "cháo,chēng,yán,lóng,zhào,méng";
         //字体名字
         String fontName = "方正仿宋-简体";
-        CopybookTemplate.CopybookTemplateBuilder copybookTemplateBuilder = CopybookTemplate.builder()
+        CopybookStyle.CopybookStyleBuilder copybookTemplateBuilder = CopybookStyle.builder()
                 .textLineStroke(StrokeForCell.DOTTED_LINE)
                 .cellMargin(new Integer[]{10, 0, 0, 0})
                 //单元格使用一个边框+田字格样式。
@@ -276,7 +274,7 @@ public class AppTest
         //设置字体
         copybookTemplateBuilder.font(new Font(fontName, Font.PLAIN, 140));
         //设置模板数据
-        CopybookTemplate copybookTemplate = copybookTemplateBuilder.pagePadding(new Integer[]{10,10,10,200}).build();
+        CopybookStyle copybookStyle = copybookTemplateBuilder.pagePadding(new Integer[]{10,10,10,200}).build();
         CopybookData copybookData = CopybookData.builder()
                 .title("一年级下学期12")
                 .author("Radium")
@@ -284,7 +282,7 @@ public class AppTest
                 .pinyinList(CollUtil.toList(pinyin.split(",")))
                 .build();
 
-        BaseCopybook baseCopybook = new BaseCopybook(copybookTemplate, copybookData);
+        BaseCopybook baseCopybook = new BaseCopybook(copybookStyle, copybookData);
         CopybookDirector director = new CopybookDirector(baseCopybook);
         try {
             Copybook construct = director.buildCopybook();
@@ -312,11 +310,11 @@ public class AppTest
     @Test
     void constructMoreAndHF() {
         //需要些的字
-        String text = "绿满原野白满川";
+        String text = "白日衣衫尽黄河入海";
         //字体名字
-        String fontName = "STFangsong";
+        String fontName = "Ramega ZhangQingpingYingbiXingshu";
 
-        CopybookTemplate.CopybookTemplateBuilder copybookTemplateBuilder = CopybookTemplate.builder()
+        CopybookStyle.CopybookStyleBuilder copybookTemplateBuilder = CopybookStyle.builder()
                 .emptyCellNum(2)
                 .textLineStroke(StrokeForCell.LINE)
                 //单元格使用一个边框+田字格样式+对角线。
@@ -340,14 +338,14 @@ public class AppTest
         Font font = new Font(fontName, Font.PLAIN, 120);
         copybookTemplateBuilder.font(font);
         //设置模板数据
-        CopybookTemplate copybookTemplate = copybookTemplateBuilder.build();
+        CopybookStyle copybookStyle = copybookTemplateBuilder.build();
         CopybookData copybookData = CopybookData.builder()
                 .title("一年级语文下12课")
                 .author("Radium")
                 .wordList(CollUtil.toList(text.split("")))
                 .build();
 
-        BaseCopybook baseCopybook = new BaseCopybook(copybookTemplate, copybookData);
+        BaseCopybook baseCopybook = new BaseCopybook(copybookStyle, copybookData);
         CopybookDirector director = new CopybookDirector(baseCopybook);
         try {
             Copybook construct = director.buildCopybook();
@@ -379,7 +377,7 @@ public class AppTest
         //字体名字
         String fontName = "方正仿宋-简体";
 
-        CopybookTemplate.CopybookTemplateBuilder copybookTemplateBuilder = CopybookTemplate.builder()
+        CopybookStyle.CopybookStyleBuilder copybookTemplateBuilder = CopybookStyle.builder()
                 .emptyCellNum(2)
                 .textLineStroke(StrokeForCell.LINE)
                 //单元格使用一个边框+田字格样式。
@@ -394,13 +392,13 @@ public class AppTest
         Font font = new Font(fontName, Font.PLAIN, 140);
         copybookTemplateBuilder.font(font);
         //设置模板数据
-        CopybookTemplate copybookTemplate = copybookTemplateBuilder.pagePadding(new Integer[]{10,10,10,200}).build();
+        CopybookStyle copybookStyle = copybookTemplateBuilder.pagePadding(new Integer[]{10,10,10,200}).build();
         CopybookData copybookData = CopybookData.builder()
                 .author("Radium")
                 .wordList(CollUtil.toList(text.split("")))
                 .build();
 
-        BaseCopybook baseCopybook = new BaseCopybook(copybookTemplate, copybookData);
+        BaseCopybook baseCopybook = new BaseCopybook(copybookStyle, copybookData);
         CopybookDirector director = new CopybookDirector(baseCopybook);
         try {
             Copybook construct = director.buildCopybook();
